@@ -82,6 +82,7 @@ try{
 const OWNER="Piano-Solutions-s-r-o", REPO="hugopos-status";
 const SUMMARY=`https://raw.githubusercontent.com/${OWNER}/${REPO}/master/history/summary.json`;
 const DAYS=90;
+const SINCE="2026-06-30"; // monitoring began; days before this render as "no data", not false-green
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function dayKeys(n){
@@ -90,15 +91,15 @@ function dayKeys(n){
     out.push(x.toISOString().slice(0,10));}
   return out;
 }
-function barClass(min){ if(min==null) return "nodata"; if(min<=0) return ""; if(min<60) return "degraded"; return "down"; }
+function barClass(min){ if(min==null) return "nodata"; if(min<=0) return ""; if(min<72) return "degraded"; return "down"; }
 function fmtMs(t){ return t==null?"—":`${t} ms`; }
 
 function renderCard(m){
   const down=m.dailyMinutesDown||{};
   const keys=dayKeys(DAYS);
   const bars=keys.map(k=>{
-    const min = (k in down)? down[k] : 0;
-    const lbl = min>0? `${k}: ${min} min down` : `${k}: operational`;
+    const min = k < SINCE ? null : ((k in down) ? down[k] : 0);
+    const lbl = min===null ? `${k}: no data` : (min>0? `${k}: ${min} min down` : `${k}: operational`);
     return `<div class="bar ${barClass(min)}" title="${lbl}"></div>`;
   }).join("");
   return `<div class="card" data-url="${esc(m.url)}" data-slug="${esc(m.slug)}">
@@ -134,6 +135,12 @@ async function liveVersion(card){
     `<div class="err">Couldn't load status data. <a href="https://github.com/${OWNER}/${REPO}">View on GitHub</a>.</div>`;
     document.getElementById("banner-text").textContent="Status data unavailable";
     document.getElementById("banner").classList.add("bad"); return; }
+  if(!Array.isArray(data) || data.length===0){
+    document.getElementById("list").innerHTML=
+      `<div class="err">Couldn't load status data. <a href="https://github.com/${OWNER}/${REPO}">View on GitHub</a>.</div>`;
+    document.getElementById("banner-text").textContent="Status data unavailable";
+    document.getElementById("banner").classList.add("bad"); return;
+  }
 
   const allUp = data.every(m=>m.status==='up');
   const banner=document.getElementById("banner");
