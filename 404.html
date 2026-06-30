@@ -1,26 +1,151 @@
-<!DOCTYPE html> <html lang=en> <head> <meta charset=utf-8> <meta content="width=device-width,initial-scale=1" name=viewport> <meta content=#333333 name=theme-color> <base href=/ > <link href=manifest.json rel=manifest crossorigin=use-credentials> <script>__SAPPER__={baseUrl:"",preloaded:[void 0]};if('serviceWorker' in navigator)navigator.serviceWorker.register('/service-worker.js');(function(){try{eval("async function x(){}");var main="/client/client.d671ba11.js"}catch(e){main="/client/legacy/client.81a917db.js"};var s=document.createElement("script");try{new Function("if(0)import('')")();s.src=main;s.type="module";s.crossOrigin="use-credentials";}catch(e){s.src="/client/shimport@2.0.5.js";s.setAttribute("data-main",main);}document.head.appendChild(s);}());</script> <link href=client/client-31a52aa5.css rel=stylesheet><link href=client/createOctokit-a85f76c7.css rel=stylesheet><link href=client/index-b0b6455a.css rel=stylesheet> <script>// If `prefers-color-scheme` is not supported, fall back to light mode.
-      // In this case, light.css will be downloaded with `highest` priority.
-      if (typeof window !== "undefined" && typeof document !== "undefined" && "matchMedia" in window && window.matchMedia('(prefers-color-scheme: dark)').media === 'not all') {
-        document.documentElement.style.display = 'none';
-        document.head.insertAdjacentHTML(
-          'beforeend',
-          '<link rel="stylesheet" href={`${config.path}/themes/light.css`} onload="document.documentElement.style.display = \'\'">',
-        );
-      } </script> <link href=https://status.hugopos.eu/themes/light.css rel=stylesheet media=(prefers-color-scheme:light)> <link href=https://status.hugopos.eu/themes/dark.css rel=stylesheet media=(prefers-color-scheme:dark)><link href=https://status.hugopos.eu/global.css rel=stylesheet><link href=https://raw.githubusercontent.com/upptime/upptime/master/assets/upptime-icon.svg rel=icon type=image/svg><link href=/logo-192.png rel=icon type=image/png> <link href=/client/client.d671ba11.js rel=modulepreload as=script crossorigin=use-credentials><link href=/client/client-31a52aa5.css rel=preload as=style><link href=/client/index.b9c494fb.js rel=modulepreload as=script crossorigin=use-credentials><link href=/client/createOctokit.3458bb8b.js rel=modulepreload as=script crossorigin=use-credentials><link href=/client/inject_styles.803b7e80.js rel=modulepreload as=script crossorigin=use-credentials><link href=/client/createOctokit-a85f76c7.css rel=preload as=style><link href=/client/index-b0b6455a.css rel=preload as=style></head> <body> <div id=sapper> <nav class=svelte-a08hsz><div class="svelte-a08hsz container"> <ul class=svelte-a08hsz><li><a href=/ class=svelte-a08hsz target=_self>Status</a> <li><a href=https://github.com/Piano-Solutions-s-r-o/hugopos-status class=svelte-a08hsz target=_self>GitHub</a> </li> </ul></div> </nav> <main class=container></main> <footer class=svelte-jbr799><p>This page is <a href=https://github.com/Piano-Solutions-s-r-o/hugopos-status>open source</a>, powered by <a href=https://upptime.js.org>Upptime</a></p> </footer></div> <script> try {
-        if (typeof window !== "undefined" && window.navigator && navigator.serviceWorker) {
-          navigator.serviceWorker.getRegistrations().then(function (registrations) {
-            for (let registration of registrations) {
-              registration.unregister();
-            }
-          });
-        }
-        if (typeof window !== "undefined" && "caches" in window) {
-          caches.keys().then(function (keyList) {
-            return Promise.all(
-              keyList.map(function (key) {
-                return caches.delete(key);
-              })
-            );
-          });
-        }
-      } catch (error) {} </script> 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hugo POS — Status</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%F0%9F%9A%A6%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#fff; --ink:#1f2933; --muted:#7b8794; --line:#e4e7eb;
+    --up:#3bd671; --degraded:#f5a623; --down:#e25950; --nodata:#dfe3e8;
+    --accent:#0b7285;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:40px 20px 64px}
+  header h1{font-size:30px;margin:0 0 4px;font-weight:800;letter-spacing:-.5px}
+  header p{margin:0 0 24px;color:var(--muted)}
+  .banner{display:flex;align-items:center;gap:12px;background:var(--card);
+    border:1px solid var(--line);border-left:5px solid var(--up);border-radius:10px;
+    padding:16px 20px;font-weight:600;margin-bottom:28px}
+  .banner.bad{border-left-color:var(--down)}
+  .banner .dot{width:14px;height:14px;border-radius:50%;background:var(--up);flex:0 0 auto}
+  .banner.bad .dot{background:var(--down)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:18px 20px;margin-bottom:16px}
+  .row1{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .name{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px}
+  .name .sdot{width:11px;height:11px;border-radius:50%;background:var(--nodata)}
+  .name .sdot.up{background:var(--up)} .name .sdot.down{background:var(--down)}
+  .badge{font-size:12px;font-weight:600;color:var(--accent);background:#e6f3f5;
+    border-radius:999px;padding:2px 9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .badge.unknown{color:var(--muted);background:#eef1f4}
+  .state{font-weight:700;font-size:14px;color:var(--up)}
+  .state.down{color:var(--down)}
+  .meta{color:var(--muted);font-size:13px;margin-top:4px}
+  .meta b{color:var(--ink);font-weight:600}
+  .bars{display:flex;gap:2px;margin-top:14px;height:34px;align-items:stretch}
+  .bar{flex:1 1 0;border-radius:2px;background:var(--up);min-width:2px;transition:opacity .1s}
+  .bar.nodata{background:var(--nodata)} .bar.degraded{background:var(--degraded)} .bar.down{background:var(--down)}
+  .bar:hover{opacity:.6}
+  .axis{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:7px}
+  footer{color:var(--muted);font-size:13px;text-align:center;margin-top:32px}
+  footer a{color:var(--accent)}
+  .legend{display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+  .legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+  .err{background:#fdeceb;border:1px solid #f5c6c2;color:#a8322d;border-radius:10px;padding:14px 18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Hugo POS — Status</h1>
+    <p>Live and historical uptime for the Hugo POS API — production &amp; staging.</p>
+  </header>
+  <div id="banner" class="banner"><span class="dot"></span><span id="banner-text">Loading…</span></div>
+  <div id="list"></div>
+  <div class="legend">
+    <span><i style="background:var(--up)"></i>Operational</span>
+    <span><i style="background:var(--degraded)"></i>Partial downtime</span>
+    <span><i style="background:var(--down)"></i>Major downtime</span>
+    <span><i style="background:var(--nodata)"></i>No data</span>
+  </div>
+  <footer>
+    <p>Updated <span id="updated">…</span> · checks every ~5&nbsp;min · data by
+    <a href="https://github.com/Piano-Solutions-s-r-o/hugopos-status">Upptime</a></p>
+  </footer>
+</div>
+<script>
+// Remove any service worker + caches left over from the previous Upptime page
+// (it registered one); otherwise returning visitors get the stale cached shell.
+try{
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister()));
+  }
+  if("caches" in window){ caches.keys().then(ks=>ks.forEach(k=>caches.delete(k))); }
+}catch(e){}
+
+const OWNER="Piano-Solutions-s-r-o", REPO="hugopos-status";
+const SUMMARY=`https://raw.githubusercontent.com/${OWNER}/${REPO}/master/history/summary.json`;
+const DAYS=90;
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function dayKeys(n){
+  const out=[]; const d=new Date(); d.setUTCHours(0,0,0,0);
+  for(let i=n-1;i>=0;i--){const x=new Date(d); x.setUTCDate(d.getUTCDate()-i);
+    out.push(x.toISOString().slice(0,10));}
+  return out;
+}
+function barClass(min){ if(min==null) return "nodata"; if(min<=0) return ""; if(min<60) return "degraded"; return "down"; }
+function fmtMs(t){ return t==null?"—":`${t} ms`; }
+
+function renderCard(m){
+  const down=m.dailyMinutesDown||{};
+  const keys=dayKeys(DAYS);
+  const bars=keys.map(k=>{
+    const min = (k in down)? down[k] : 0;
+    const lbl = min>0? `${k}: ${min} min down` : `${k}: operational`;
+    return `<div class="bar ${barClass(min)}" title="${lbl}"></div>`;
+  }).join("");
+  return `<div class="card" data-url="${esc(m.url)}" data-slug="${esc(m.slug)}">
+    <div class="row1">
+      <div class="name"><span class="sdot ${m.status==='up'?'up':(m.status==='down'?'down':'')}"></span>
+        ${esc(m.name)} <span class="badge unknown" data-ver>·</span></div>
+      <div class="state ${m.status==='up'?'':'down'}" data-state>${m.status==='up'?'Operational':(m.status==='down'?'Down':'Unknown')}</div>
+    </div>
+    <div class="meta">Uptime (overall): <b>${esc(m.uptime||'—')}</b> · Avg response: <b>${fmtMs(m.time)}</b></div>
+    <div class="bars">${bars}</div>
+    <div class="axis"><span>${DAYS} days ago</span><span>today</span></div>
+  </div>`;
+}
+
+async function liveVersion(card){
+  const url=card.getAttribute("data-url"); if(!url) return null;
+  try{
+    const r=await fetch(url,{cache:"no-store"});
+    const j=await r.json();
+    const v=j.version||{};
+    const label = v.ref && v.short ? `${v.ref} · ${v.short}` : (v.short || v.ref || null);
+    const badge=card.querySelector("[data-ver]");
+    if(label){ badge.textContent=label; badge.classList.remove("unknown"); }
+    else { badge.textContent="version n/a"; }
+    return j.ok===true;
+  }catch(e){ const b=card.querySelector("[data-ver]"); if(b) b.textContent="version n/a"; return null; }
+}
+
+(async function(){
+  let data;
+  try{ const r=await fetch(SUMMARY,{cache:"no-store"}); data=await r.json(); }
+  catch(e){ document.getElementById("list").innerHTML=
+    `<div class="err">Couldn't load status data. <a href="https://github.com/${OWNER}/${REPO}">View on GitHub</a>.</div>`;
+    document.getElementById("banner-text").textContent="Status data unavailable";
+    document.getElementById("banner").classList.add("bad"); return; }
+
+  const allUp = data.every(m=>m.status==='up');
+  const banner=document.getElementById("banner");
+  document.getElementById("banner-text").textContent = allUp ? "All systems operational" : "Some systems are experiencing issues";
+  if(!allUp) banner.classList.add("bad");
+
+  document.getElementById("list").innerHTML = data.map(renderCard).join("");
+  document.getElementById("updated").textContent = new Date().toLocaleString();
+
+  // Enrich each row with the live deployed version (cross-origin to /api/health).
+  document.querySelectorAll(".card").forEach(liveVersion);
+})();
+</script>
+</body>
+</html>
