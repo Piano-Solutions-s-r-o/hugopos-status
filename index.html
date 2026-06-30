@@ -92,7 +92,7 @@ function dayKeys(n){
   return out;
 }
 function barClass(min){ if(min==null) return "nodata"; if(min<=0) return ""; if(min<72) return "degraded"; return "down"; }
-function fmtMs(t){ return t==null?"—":`${t} ms`; }
+function fmtMs(t){ const n=Number(t); return Number.isFinite(n)?`${n} ms`:"—"; }
 
 function renderCard(m){
   const down=m.dailyMinutesDown||{};
@@ -100,7 +100,7 @@ function renderCard(m){
   const bars=keys.map(k=>{
     const min = k < SINCE ? null : ((k in down) ? down[k] : 0);
     const lbl = min===null ? `${k}: no data` : (min>0? `${k}: ${min} min down` : `${k}: operational`);
-    return `<div class="bar ${barClass(min)}" title="${lbl}"></div>`;
+    return `<div class="bar ${barClass(min)}" title="${esc(lbl)}"></div>`;
   }).join("");
   return `<div class="card" data-url="${esc(m.url)}" data-slug="${esc(m.slug)}">
     <div class="row1">
