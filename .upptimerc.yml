@@ -8,13 +8,16 @@ sites:
     url: https://api.hugopos.eu/api/health
     expectedStatusCodes:
       - 200
-    # Mark DOWN if the health body is missing ok:true (covers 504 / DB / Gemini degraded)
-    __dangerous__body_down_if_text_missing: '"ok":true'
+    # Assert DB-core connectivity, NOT top-level ok (HUGO-548): ok ANDs in the
+    # Gemini check, so a Google/Gemini hiccup would falsely flag the API down.
+    # database.connected reflects the core POS API (SELECT 1) and is present in
+    # both the prod and staging health bodies.
+    __dangerous__body_down_if_text_missing: '"connected":true'
   - name: Hugo API (staging)
     url: https://staging.api.hugopos.eu/api/health
     expectedStatusCodes:
       - 200
-    __dangerous__body_down_if_text_missing: '"ok":true'
+    __dangerous__body_down_if_text_missing: '"connected":true'
 
 status-website:
   cname: status.hugopos.eu
