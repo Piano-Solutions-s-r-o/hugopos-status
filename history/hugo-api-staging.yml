@@ -1,7 +1,7 @@
 url: https://staging.api.hugopos.eu/api/health
-status: down
-code: 504
-responseTime: 125
-lastUpdated: 2026-07-01T13:56:26.438Z
+status: up
+code: 200
+responseTime: 1996
+lastUpdated: 2026-07-01T16:24:47.760Z
 startTime: 2026-06-30T16:24:16.588Z
 generator: Upptime <https://github.com/upptime/upptime>
