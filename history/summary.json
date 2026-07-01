@@ -4,18 +4,20 @@
     "url": "https://api.hugopos.eu/api/health",
     "icon": "https://icons.duckduckgo.com/ip3/api.hugopos.eu.ico",
     "slug": "hugo-api-prod",
-    "status": "up",
-    "uptime": "100.00%",
-    "uptimeDay": "100.00%",
-    "uptimeWeek": "100.00%",
-    "uptimeMonth": "100.00%",
-    "uptimeYear": "100.00%",
-    "time": 1175,
-    "timeDay": 1175,
-    "timeWeek": 1175,
-    "timeMonth": 1175,
-    "timeYear": 1175,
-    "dailyMinutesDown": {}
+    "status": "down",
+    "uptime": "99.99%",
+    "uptimeDay": "99.99%",
+    "uptimeWeek": "99.99%",
+    "uptimeMonth": "99.99%",
+    "uptimeYear": "99.99%",
+    "time": 844,
+    "timeDay": 844,
+    "timeWeek": 844,
+    "timeMonth": 844,
+    "timeYear": 844,
+    "dailyMinutesDown": {
+      "2026-07-01": 0
+    }
   },
   {
     "name": "Hugo API (staging)",
@@ -23,16 +25,18 @@
     "icon": "https://icons.duckduckgo.com/ip3/staging.api.hugopos.eu.ico",
     "slug": "hugo-api-staging",
     "status": "up",
-    "uptime": "100.00%",
-    "uptimeDay": "100.00%",
-    "uptimeWeek": "100.00%",
-    "uptimeMonth": "100.00%",
-    "uptimeYear": "100.00%",
-    "time": 1276,
-    "timeDay": 1276,
-    "timeWeek": 1276,
-    "timeMonth": 1276,
-    "timeYear": 1276,
-    "dailyMinutesDown": {}
+    "uptime": "84.66%",
+    "uptimeDay": "84.66%",
+    "uptimeWeek": "84.66%",
+    "uptimeMonth": "84.66%",
+    "uptimeYear": "84.66%",
+    "time": 1173,
+    "timeDay": 1173,
+    "timeWeek": 1173,
+    "timeMonth": 1173,
+    "timeYear": 1173,
+    "dailyMinutesDown": {
+      "2026-07-01": 178
+    }
   }
 ]
