@@ -18,12 +18,25 @@ sites:
     expectedStatusCodes:
       - 200
     __dangerous__body_down_if_text_missing: '"connected":true'
+  # HUGO-731: Admin health moved off the private-repo GitHub Actions cron
+  # (uptime-monitor.yml, ~8.6k billed min/mo) onto this free public-repo
+  # Upptime instance. A plain HTTP 200 is the right signal — the Admin is a
+  # static SPA with no health body, and the staging password gate (HUGO-671)
+  # is client-side JS so it still serves 200.
+  - name: Hugo Admin (prod)
+    url: https://admin.hugopos.eu/
+    expectedStatusCodes:
+      - 200
+  - name: Hugo Admin (staging)
+    url: https://staging.admin.hugopos.eu/
+    expectedStatusCodes:
+      - 200
 
 status-website:
   cname: status.hugopos.eu
   name: Hugo POS Status
   introTitle: "**Hugo POS** — Status"
-  introMessage: "Live and historical uptime for the Hugo POS API (production &amp; staging). Powered by [Upptime](https://upptime.js.org)."
+  introMessage: "Live and historical uptime for Hugo POS — API and Admin (production &amp; staging). Powered by [Upptime](https://upptime.js.org)."
   navbar:
     - title: Status
       href: /
